@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from os import environ
@@ -6,7 +6,7 @@ import wikipedia
 from random import randint
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 
 app.config['SECRET_KEY'] = environ.get('SECRET_KEY')
 app.config['FLASK_DEBUG'] = environ.get('FLASK_DEBUG')
@@ -21,6 +21,11 @@ migrate = Migrate(app, db)
 
 from app import app
 from app.models import Locations
+
+@app.route('/robots.txt')
+@app.route('/sitemap.xml')
+def static_from_root():
+    return send_from_directory(app.static_folder, request.path[1:])
 
 @app.route("/")
 def index():
