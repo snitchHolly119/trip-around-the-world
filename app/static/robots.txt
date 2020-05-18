@@ -1,1 +1,3 @@
 Sitemap: trip-around-the-world.herokuapp.com/sitemap.xml
+User-agent:*
+Disallow:
